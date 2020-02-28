@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="com.xworkz.signup"></context:component-scan>
+	
+     <bean
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		id="localSessionFactoryBean">
+		<!-- <property name="configLocations" value="classpath:resources/mysql.xml"></property> -->
+		<property name="dataSource" ref="driverManagerDataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.xworkz.signup.entity.SignupEntity</value>
+		
+			</list>
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+
+	</bean>
+	<bean
+	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+			id="propertyPlaceholderConfigurer">
+			<property name="locations" value="classpath:datasource.properties"></property>
+	</bean>
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="driverManagerDataSource">
+		<property name="driverClassName"
+			value="${datasource.driver.class.name}" />
+		<property name="username" value="${datasource.user.name}" />
+		<property name="password" value="${datasource.password}" />
+		<property name="url"
+			value="${datasource.url}" />
+	</bean>
+	
+	<bean id="internalResourceViewResolver"
+	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix" value="/" />
+	<property name="suffix" value=".jsp" />
+	</bean>
+	
+
+
+</beans>
